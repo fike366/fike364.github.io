@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Students</title>
+    <style>
+        label{
+            display: inline-block;
+            width: 150px;
+            text-align: right;
+        }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script>
+        function addBtnClick(){
+            var stFirstName = $("#stFirst").val();
+            var stLastName = $("#stLast").val();
+            var stID = $("#stId").val();
+            var stMailAddress = $("#stMailAddress").val();
+            var stPhoneNumber = $("#stPhoneNum").val();
+            var stEmailAddress =$("#stEmailAddress").val();
+            var studentData = {
+                st_FirstName: stFirstName,
+                st_LastName: stLastName,
+                st_ID: stID,
+                st_MailAddress: stMailAddress,
+                st_PhoneNumber: stPhoneNumber,
+                st_EmailAddress: stEmailAddress,
+            };
+            console.log(studentData);
+            $.ajax({
+                method: "POST",
+                url: "/young/student",
+                data: studentData,
+                dataType: "json",
+                success: function(data){
+                    document.getElementById("showResults").innerHTML = data;
+                }
+            })};
+
+        function findBtnClick() {
+            var resultDiv = $("#showResults").val();
+            var stFirstName = $("#stFirst").val();
+            var stLastName = $("#stLast").val();
+            var stID = $("#stId").val();
+            var stMailAddress = $("#stMailAddress").val();
+            var stPhoneNumber = $("#stPhoneNum").val();
+            var stEmailAddress =$("#stEmailAddress").val();
+            var studentData = {
+                st_FirstName: stFirstName,
+                st_LastName: stLastName,
+                st_ID: stID,
+                st_MailAddress: stMailAddress,
+                st_PhoneNumber: stPhoneNumber,
+                st_EmailAddress: stEmailAddress,
+            };
+            $.ajax({
+                method: "GET",
+                url: "/young/student",
+                data: studentData,
+                //dataType: "json",
+                success: function(data){
+                    var output = resultDiv;
+                    $.each(data, function (key, data) {
+                        output += '<div>';
+                        output += '<br>' + 'table returned ' ;
+                        output += '<br>' + 'First Name: ' + data.st_FirstName + '</br>';
+                        output += '<br>' + 'Last Name: ' + data.st_LastName + '</br>';
+                        output += '<br>' + 'ID: ' + data.st_ID + '</br>';
+                        output += '<br>' + 'Mail Address: ' + data.st_MailAddress + '</br>';
+                        output += '<br>' + 'Phone Number: ' + data.st_PhoneNumber + '</br>';
+                        output += '<br>' + 'Email Address: ' + data.st_EmailAddress + '</br>';
+                        output += '</div>';
+                    });
+                    output += '</div>' + '<br>';
+                    $('#showResults').html(output);
+                }
+            })};
+
+        function updateBtnClick() {
+            var stFirstName = $("#stFirst").val();
+            var stLastName = $("#stLast").val();
+            var stID = $("#stId").val();
+            var stMailAddress = $("#stMailAddress").val();
+            var stPhoneNumber = $("#stPhoneNum").val();
+            var stEmailAddress =$("#stEmailAddress").val();
+            var studentData = {
+                st_FirstName: stFirstName,
+                st_LastName: stLastName,
+                st_ID: stID,
+                st_MailAddress: stMailAddress,
+                st_PhoneNumber: stPhoneNumber,
+                st_EmailAddress: stEmailAddress,
+            };
+            $.ajax({
+                method: "PUT",
+                url: "/young/student",
+                data: studentData,
+                dataType: "json",
+                success: function(data){
+                    document.getElementById("showResults").innerHTML = data;
+                }
+            })};
+
+
+        function deleteBtnClick() {
+            var stFirstName = $("#stFirst").val();
+            var stLastName = $("#stLast").val();
+            var stID = $("#stId").val();
+            var stMailAddress = $("#stMailAddress").val();
+            var stPhoneNumber = $("#stPhoneNum").val();
+            var stEmailAddress =$("#stEmailAddress").val();
+            var studentData = {
+                st_FirstName: stFirstName,
+                st_LastName: stLastName,
+                st_ID: stID,
+                st_MailAddress: stMailAddress,
+                st_PhoneNumber: stPhoneNumber,
+                st_EmailAddress: stEmailAddress,
+            };
+            $.ajax({
+                method: "DELETE",
+                url: "/young/student",
+                data: studentData,
+                dataType: "json",
+                success: function(data){
+                    document.getElementById("showResults").innerHTML = data;
+                }
+            })};
+    </script>
+</head>
+<body>
+<form>
+    <h1> Add Students To DB </h1>
+    <label>Student First Name: </label>
+    <input type="text" id="stFirst">
+    <br><br>
+    <label>Student Last Name: </label>
+    <input type="text" id="stLast">
+    <br><br>
+    <label>Student ID: </label>
+    <input type="text" id="stId">
+    <br><br>
+    <label>Mailing Address: </label>
+    <input type="text" id="stMailAddress">
+    <br><br>
+    <label>Phone Number: </label>
+    <input type="tel" id="stPhoneNum">
+    <br><br>
+    <label>Email Address: </label>
+    <input type="email" id="stEmailAddress">
+    <br><br>
+
+    <input  type="button" id="addButton" onclick="addBtnClick()" value="Add">
+    <input  type="button" id="findButton" onclick="findBtnClick()" value="Find">
+    <input  type="button" id="updateButton" onclick="updateBtnClick()" value="Update">
+    <input  type="button" id="deleteButton" onclick="deleteBtnClick()" value="Delete">
+
+    <div id="showResults">
+
+    </div>
+</form>
+
+</body>
+</html>
